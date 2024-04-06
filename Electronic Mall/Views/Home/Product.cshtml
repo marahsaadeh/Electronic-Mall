@@ -1,0 +1,18 @@
+﻿
+@model Electronic_Mall.Models.Product
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+      
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">الوصف: @Model.Description</p>
+                    <p class="card-text">السعر: @Model.Price</p>
+                    <p class="card-text">الكمية المتاحة: @Model.Quantity</p>
+                    <img src="@Model.Photo" alt="@Model.Name" class="img-fluid">
+                </div>
+       
+        </div>
+    </div>
+</div>
