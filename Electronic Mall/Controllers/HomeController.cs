@@ -7,7 +7,8 @@ using System.Diagnostics;
 namespace Electronic_Mall.Controllers
 {
     public class HomeController : Controller
-    {    
+    {
+        //localhost:7171/controller/Action in controller
         //localhost:7171/home/index
         public IActionResult Index()
         {
@@ -30,7 +31,13 @@ namespace Electronic_Mall.Controllers
             return View(cats);
 
         }
+<<<<<<< HEAD
+
         //localhost:7171/Home/SubCategory?subCategoryId={id}
+
+=======
+        //localhost:7171/Home/SubCategory?subCategoryId={id}
+>>>>>>> 2965ca98be0b149daf1e0d1a8ab8c08b58993e45
         public ActionResult SubCategory(int subCategoryId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -67,13 +74,13 @@ namespace Electronic_Mall.Controllers
         public IActionResult Cart()
         {
             return View();
-    }
+        }
 
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-public IActionResult Error()
-{
-  return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-}
-}
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+    }
 }
 
