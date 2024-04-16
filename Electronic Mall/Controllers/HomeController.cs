@@ -7,7 +7,8 @@ using System.Diagnostics;
 namespace Electronic_Mall.Controllers
 {
     public class HomeController : Controller
-    {    
+    {
+        //localhost:7171/controller/Action in controller
         //localhost:7171/home/index
         public IActionResult Index()
         {
