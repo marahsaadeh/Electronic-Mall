@@ -24,14 +24,14 @@ namespace Electronic_Mall.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
 
-/*Include() fetches data from two tables. So here, data from the Category
- * table and data from the Product table have been fetched*/
+            /*Include() fetches data from two tables. So here, data from the Category
+             * table and data from the Product table have been fetched*/
             var cats = db.Categories.Include(c => c.Products).ToList();
 
             return View(cats);
-      
+
         }
-       
+        //localhost:7171/Home/SubCategory?subCategoryId={id}
         public ActionResult SubCategory(int subCategoryId)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -39,6 +39,8 @@ namespace Electronic_Mall.Controllers
 
             return View(products);
         }
+
+        //localhost:7171/Home/Product?productId=3
         public ActionResult Product(int? productId)
         {
             if (productId == null)
