@@ -20,7 +20,7 @@ namespace Electronic_Mall.Controllers
             return View(db.Categories.ToList());
         }
 
-        [HttpPost]
+         [HttpPost]
         public IActionResult AddCategory(string categoryName)
         {
             db.Categories.Add(new Category { Categoryname = categoryName });
@@ -43,11 +43,11 @@ namespace Electronic_Mall.Controllers
                 db.Entry(category).State = EntityState.Modified;
 
                 db.SaveChanges();
-                return RedirectToAction("ReadCategories");
+   return RedirectToAction("ReadCategories");
             }
             else
             {
-
+            
                 return View(category);
             }
         }
