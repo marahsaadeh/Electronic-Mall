@@ -1,0 +1,58 @@
+﻿@section Styles {
+    <style>
+        #aCate {
+            background-color: silver;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+}
+
+@model List<Electronic_Mall.Models.Category>
+<h1>Categor creaaat</h1>
+<h2>Create Category</h2>
+<section id="services" class="services section-bg">
+<div style="margin-right: 20%">
+  <div class="container">
+    <form action="/Category/AddCategory" method="post">
+      <label for="categoryName">Category Name:</label><br>
+      <input type="text" id="categoryName" name="categoryName"><br><br>
+      <button type="submit">اضافة الصنف الجديد</button>
+    </form>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>الاسم</th>
+          <th>العمليات</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach (var category in Model)
+        {
+           
+            <tr >
+            <td>@category.Categoryname</td>
+            <td>
+              <a href="@Url.Action("EditCategory", "Category", new { categoryId = category.Categoryid })" class="text-primary">
+    
+             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+               
+                  <path fill-rule="evenodd" d="M12.854.146a1 1 0 0 1 0 1.414L2.707 12.561a1 1 0 0 0-.226.364l-1.5 3a1 1 0 0 0 1.22 1.22l3-1.5a1 1 0 0 0 .364-.226L14.854 3.146a1 1 0 0 1 1.414 0l1.5 1.5a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1-1.49-1.326l1.5-3a1 1 0 0 0-.226-.364L12.854.146zM3.646 11.646l7-7 .708.708-7 7-.708-.708z" />
+                </svg>
+              </a>
+             <a href="@Url.Action("Delete", "Category", new { id = category.Categoryid })" class="text-danger">
+            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 1 1 1v1a1 1 0 0 0 1 1h1v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h1a1 1 0 0 1 1-1V2a1 1 0 0 1-1-1H3zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v1H1V4zm4-2v-.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5V2h1v-.5A1.5 1.5 0 0 0 10.5 0h-5A1.5 1.5 0 0 0 4 1.5V2h1z" />
+            </svg>
+          </a>
+                            </td>
+                </tr>
+                    }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+</section>
+
