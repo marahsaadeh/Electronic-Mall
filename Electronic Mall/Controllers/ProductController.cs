@@ -17,16 +17,16 @@ namespace Electronic_Mall.Controllers
     {
 
         //localhost:7171/controller/Action in controller
-
+    
         private readonly ApplicationDbContext db;
         private readonly IWebHostEnvironment hostingEnvironment;
 
         public ProductController(ApplicationDbContext db, IWebHostEnvironment hc)
         {
-            this.db = db;
+            this.db = db; 
             hostingEnvironment = hc;
         }
-
+       
         //localhost:7171/Product/ReadProducts
         public IActionResult ReadProducts()
         {
@@ -57,35 +57,35 @@ namespace Electronic_Mall.Controllers
             // {
             string fileName = "";
 
-            if (product.Photo != null)
-            {
+                if (product.Photo != null)
+                {
                 //string uploadFolder = Server.MapPath("~/images");
                 string uploadFolder = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img");
-                fileName = Guid.NewGuid().ToString() + "-" + product.Photo.FileName;
-                string filePath = Path.Combine(uploadFolder, fileName);
+                    fileName = Guid.NewGuid().ToString() + "-" + product.Photo.FileName;
+                    string filePath = Path.Combine(uploadFolder, fileName);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    product.Photo.CopyToAsync(fileStream); // Use async for file operations
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        product.Photo.CopyToAsync(fileStream); // Use async for file operations
+                    }
                 }
-            }
             // Add product to database
             Product newProduct = new Product
-            {
-                Categoryid = product.Categoryid,
-                Name = product.ProductName,
-                Description = product.ProductDescription,
-                Price = product.ProductPrice,
-                Quantity = product.ProductQuantity,
-                Photo = fileName
-            };
+                {
+                    Categoryid = product.Categoryid,
+                    Name = product.ProductName,
+                    Description = product.ProductDescription,
+                    Price = product.ProductPrice,
+                    Quantity = product.ProductQuantity,
+                    Photo = fileName
+                };            
             db.Products.AddAsync(newProduct);
             //await db.SaveChangesAsync();
             db.SaveChangesAsync();
 
-            ViewBag.Success = "Record added successfully!";
-            return RedirectToAction("ReadProducts"); // Redirect to a success page or product list
-                                                     // }
+                ViewBag.Success = "Record added successfully!";
+                return RedirectToAction("ReadProducts"); // Redirect to a success page or product list
+           // }
         }
 
         //localhost:7171/Product/EditProduct
@@ -100,18 +100,18 @@ namespace Electronic_Mall.Controllers
                 Categoryid = product.Categoryid,
                 ProductName = product.Name,
                 ProductDescription = product.Description,
-                ProductPrice = product.Price,
-                ProductQuantity = product.Quantity,
+                ProductPrice= product.Price,
+                ProductQuantity=product.Quantity,
             };
             ViewData["Productid"] = product.Productid;
             ViewData["Photo"] = product.Photo;
 
             return View(productViewModel);
-            //   return View(db.Products.Find(productId));
+         //   return View(db.Products.Find(productId));
         }
-
+        
         [HttpPost]
-
+        
         public ActionResult EditProduct(int id, ProductViewModel productVM)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -127,14 +127,14 @@ namespace Electronic_Mall.Controllers
                 string newFileName = product.Photo;
                 if (productVM.Photo != null)
                 {
-                    string uploadFolder = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img");
+                        string uploadFolder = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img");
                     newFileName = Guid.NewGuid().ToString() + "-" + productVM.Photo.FileName;
-                    string imageFullPath = Path.Combine(uploadFolder, newFileName);
-                    using (var stream = new FileStream(imageFullPath, FileMode.Create))
+                        string imageFullPath = Path.Combine(uploadFolder, newFileName);
+                   using (var stream = new FileStream(imageFullPath, FileMode.Create))
                     {
                         productVM.Photo.CopyTo(stream);
                     }
-
+          
                     // delete old photo
                     string oldImageFullPath = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img", product.Photo);
                     if (System.IO.File.Exists(oldImageFullPath))
@@ -166,9 +166,9 @@ namespace Electronic_Mall.Controllers
 
             string imageFullPath = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img", product.Photo);
 
-
-            System.IO.File.Delete(imageFullPath);
-
+          
+                System.IO.File.Delete(imageFullPath);
+            
 
             db.Products.Remove(product);
             db.SaveChanges();
@@ -176,6 +176,46 @@ namespace Electronic_Mall.Controllers
             return RedirectToAction("ReadProducts");
         }
 
-      
+        /*
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var category = db.Categories.Find(id);
+            if (category == null)
+            {
+                return NotFound();
+            }
+
+            return View(category);
+        }
+
+        public ActionResult DeletedSuccess(int id)
+        {
+            var category = db.Categories.Find(id);
+            if (category != null)
+            {
+                db.Categories.Remove(category);
+                try
+                {
+                    db.SaveChanges();
+                    return View();
+                }
+                catch (DbUpdateException ex)
+                {
+                    // Log the exception and handle appropriately (e.g., display error message)
+                    ModelState.AddModelError("", "Delete failed. See your system administrator.");
+                    return View("Delete", category); // Re-render Delete view with error message
+                }
+            }
+
+            return NotFound(); // Category not found
+        }*/
+
     }
 }
+
+
