@@ -1,0 +1,61 @@
+﻿@section Styles {
+    <style>
+        #aPro {
+            background-color: silver;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+}
+
+@model List<Electronic_Mall.Models.Category>
+<h1>اضافة منتج جديد</h1>
+<!--categories-->
+
+<section id="services" class="services section-bg">
+    <div style="margin-right: 20%">
+        <div class="container">
+            <p>@ViewBag.Success</p>
+
+            <form action="/Product/AddProduct" method="post" enctype="multipart/form-data">
+                <!--id hidden  Categoryid-->
+                <input type="hidden" id="Categoryid" name="Categoryid" value="7">
+                <label for="productCategory"> صنف المنتج الجديد :</label><br>
+                <select id="productCategory" name="ProductCategory">
+                    @{
+                        foreach (var category in Model)
+                        {
+                            <option value="@category.Categoryid">@category.Categoryname</option>
+                        }
+                    }
+                </select>
+
+                <br><br>
+                <label for="productName">اسم المنتج الجديد:</label><br>
+             
+                <input type="text" id="productName" name="ProductName"><br><br>
+
+                <label for="productDescription">وصف:</label><br>
+                <textarea id="productDescription" name="ProductDescription"></textarea><br><br>
+
+                <label for="productPrice">سعر:</label><br>
+                <input type="number" id="productPrice" name="ProductPrice"><br><br>
+
+                <label for="productQuantity">كم متوفر منه في المخزن:</label><br>
+                <input type="number" id="productQuantity" name="ProductQuantity"><br><br>
+                <label for="photo" class="control-label">صورة المنتج:</label><br>
+                <input type="file" id="photo" name="Photo" class="form-control"/>
+                <br><br>
+
+
+                <button type="submit">اضافة المنتج الجديد </button>
+            </form>
+            <script>
+                $(document).ready(function() {
+                  $('#ProductCategory').change(function() {
+                    $('#Categoryid').val($(this).val());
+                  });
+                });
+            </script>

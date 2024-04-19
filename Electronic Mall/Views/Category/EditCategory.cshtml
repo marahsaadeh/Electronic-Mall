@@ -1,0 +1,25 @@
+﻿@section Styles {
+    <style>
+        h1 {
+            text-align: center;
+        }
+    </style>
+}
+
+@model Electronic_Mall.Models.Category
+<h1>تعديل الصنف</h1>
+
+<form action="/Category/EditCategory" method="post" enctype="multipart/form-data">
+   <input type="hidden" id="categoryId" name="categoryId" value="@Model.Categoryid" />
+    
+   <br><br>
+    <div class="form-group">
+        
+        <label for="categoryName">اسم الصنف:</label>
+        <input type="text" id="categoryName" name="categoryName" class="form-control" value="@Model.Categoryname" />
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-success" value="حفظ" />
+      <!--<button type="submit">Save</button>-->
+    </div>
+</form>

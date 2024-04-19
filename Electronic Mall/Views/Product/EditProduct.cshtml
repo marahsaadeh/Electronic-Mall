@@ -1,0 +1,63 @@
+﻿@section Styles {
+    <style>
+        h1 {
+            text-align: center;
+        }
+    </style>
+}
+@model Electronic_Mall.ProductViewModel
+
+<h1>تعديل المنتج</h1>
+<form action="/Product/EditProduct" method="post" enctype="multipart/form-data">
+    <input type="hidden" id="productId" name="id" value="@ViewData["Productid"]" />
+    <input type="hidden" id="Categoryid" name="Categoryid" value="@Model.Categoryid">
+
+    <br><br>
+    <!--
+    <div class="form-group">
+        <label for="productCategory"> صنف المنتج :</label><br>
+        <select id="productCategory" name="ProductCategory" disabled>
+           foreach (var category in Model.Category)
+            {
+                <option value="category.Categoryid">category.Categoryname</option>
+            }
+        </select>
+    </div>
+   
+
+    -->
+    <div class="form-group">
+        <label for="productName">اسم المنتج:</label><br>
+        <input type="text" id="productName" name="ProductName" class="form-control" value="@Model.ProductName" />
+    </div>
+    <div class="form-group">
+        <label for="productDescription">وصف:</label><br>
+        <textarea id="productDescription" name="ProductDescription" class="form-control">@Model.ProductDescription</textarea>
+    </div>
+    <div class="form-group">
+        <label for="productPrice">سعر:</label><br>
+        <input type="number" id="productPrice" name="ProductPrice" class="form-control" value="@Model.ProductPrice" />
+    </div>
+    <div class="form-group">
+        <label for="productQuantity">كم متوفر منه في المخزن:</label><br>
+        <input type="number" id="productQuantity" name="ProductQuantity" class="form-control" value="@Model.ProductQuantity" />
+    </div>
+    <div class="form-group">
+        <div class="row mb-3">
+            <div class="offset-sm-4 col-sm-8">
+        <img src="../assets/img/@ViewData["Photo"]" alt="@Model.ProductName" width="200" height="150" />
+            <br />
+        </div>
+    </div>
+        <div class="row mb-3">
+      <!-- <input type="file" id="photo" name="Photo" class="form-control" />-->       
+        <label for="photo" class="col-sm-4 col-form-label">صورة المنتج:</label><br>
+            <div class="col-sm-8">
+        <input type="file" id="photo" name="Photo" class="form-control" />
+            </div>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-success" value="حفظ" />
+    </div>
+</form>
