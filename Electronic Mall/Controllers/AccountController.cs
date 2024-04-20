@@ -43,9 +43,9 @@ namespace Electronic_Mall.Controllers
 
                 _context.Add(user);
                 await _context.SaveChangesAsync();
-                //TempData بدلاً من ViewBag.success = "it added";
-                //لنقل الرسائل بين الـ Actions
-                // إعداد رسالة نجاح لعرضها في الـ View
+                //TempData instead of ViewBag.success = "it added";
+                //To transfer messages between Actions
+                // Prepare a success message to display in the View
                 TempData["SuccessMessage"] = "تم إضافة المستخدم بنجاح!"; 
              
                 return RedirectToAction("Index", "Home");
@@ -54,8 +54,8 @@ namespace Electronic_Mall.Controllers
         }
         private int GetDefaultRoleId()
         {
-               // الرقم 2 يمثل "Regular_user" في الداتا بيس
-                         return 2;
+            // The number 2 represents “Regular_user” in the data base
+            return 2;
 
          /*   var defaultRole = _context.UserRoles.FirstOrDefault(r => r.Rolename == "Regular_user");
             if (defaultRole != null)
@@ -121,11 +121,19 @@ namespace Electronic_Mall.Controllers
             await HttpContext.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
-
+       
         private bool VerifyPasswordHash(string password, string storedHash)
         {
-            
-            return true;
+            var hasher = new PasswordHasher<User>();
+            // Create a temporary instance of User to use for validation
+            var tempUser = new User { Passwordhash = storedHash };
+
+            // VerifyHashedPassword returns with type PasswordVerificationResult
+
+            var result = hasher.VerifyHashedPassword(tempUser, storedHash, password);
+
+            // Check if the result indicates that the hash verification was successful
+            return result == PasswordVerificationResult.Success;
         }
     }
 }
