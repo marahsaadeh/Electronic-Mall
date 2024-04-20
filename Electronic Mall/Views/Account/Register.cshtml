@@ -1,0 +1,42 @@
+﻿@model Electronic_Mall.RegisterViewModel
+
+@{
+    ViewData["Title"] = "تسجيل حساب جديد";
+}
+
+<h2>@ViewData["Title"]]</h2>
+
+<form action="/Account/Register" method="post">
+    <div class="text-danger">
+        @Html.ValidationSummary(true)
+    </div>
+
+    <div class="form-group">
+        <label for="Username">اسم المستخدم</label>
+        <input type="text" id="Username" name="Username" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="Email">البريد الإلكتروني</label>
+        <input type="email" id="Email" name="Email" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="Password">كلمة المرور</label>
+        <input type="password" id="Password" name="Password" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <label for="ConfirmPassword">تأكيد كلمة المرور</label>
+        <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">تسجيل</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
