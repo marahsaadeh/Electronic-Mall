@@ -95,8 +95,9 @@ namespace Electronic_Mall.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             var product = db.Products.Find(productId);
             if (product == null) { return RedirectToAction("ReadProducts"); }
-            var productViewModel = new ProductViewModel() {
-                Categoryid=product.Categoryid,
+            var productViewModel = new ProductViewModel()
+            {
+                Categoryid = product.Categoryid,
                 ProductName = product.Name,
                 ProductDescription = product.Description,
                 ProductPrice= product.Price,
@@ -111,7 +112,7 @@ namespace Electronic_Mall.Controllers
         
         [HttpPost]
         
-        public ActionResult EditProduct(int id ,ProductViewModel productVM)
+        public ActionResult EditProduct(int id, ProductViewModel productVM)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             var product = db.Products.Find(id);

@@ -24,13 +24,16 @@
   <link href="~/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 
     @RenderSection("Styles", required: false)
   <!-- Template Main CSS File -->
   <link href="~/assets/css/style.css" rel="stylesheet">
     <link href="~/assets/css/mystyle.css" rel="stylesheet">
+
+    <!-- Render optional 'Styles' section if it is defined in any View -->
+    @RenderSection("Styles", required: false)
   <!-- =======================================================
   * Template Name: Techie
   * Template URL: https://bootstrapmade.com/techie-free-skin-bootstrap-3/
@@ -38,6 +41,9 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+ 
+
+
 </head>
 
 <body>
@@ -102,6 +108,7 @@
     
   <main id="main">
         @RenderBody()
+       
   </main><!-- End #main -->
 
   <!-- ======= Footer ======= -->
@@ -205,3 +212,4 @@
 </html>
 
 @await RenderSectionAsync("Scripts", required: false)
+
