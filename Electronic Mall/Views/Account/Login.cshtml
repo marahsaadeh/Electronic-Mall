@@ -6,22 +6,27 @@
 
 <h2>@ViewData["Title"]</h2>
 
-<form asp-action="Login" method="post">
-    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-    <div class="form-group">
-        <label asp-for="Username">اسم المستخدم</label>
-        <input asp-for="Username" class="form-control" />
-        <span asp-validation-for="Username" class="text-danger"></span>
+<form action="/Account/Login" method="post">
+    <div class="text-danger">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
-        <label asp-for="Password">كلمة المرور</label>
-        <input asp-for="Password" type="password" class="form-control" />
-        <span asp-validation-for="Password" class="text-danger"></span>
+        <label for="Username">اسم المستخدم</label>
+        <input type="text" id="Username" name="Username" class="form-control" value="@Model.Username" />
+        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="Password">كلمة المرور</label>
+        <input type="password" id="Password" name="Password" class="form-control" />
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
     </div>
 
     <div class="form-group">
         <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
     </div>
 </form>
+
+      
+
