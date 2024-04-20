@@ -64,7 +64,6 @@ namespace Electronic_Mall.Controllers
             }
             else
             {
-                // إذا لم يتم العثور على الدور الافتراضي، قم برمي استثناء أو التعامل مع هذه الحالة بطريقة مناسبة.
                 throw new Exception("Default role 'Regular_user' not found. Please ensure it is created in the database.");
             }*/
         }
@@ -74,8 +73,11 @@ namespace Electronic_Mall.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            var model = new LoginViewModel();
+            model.Username = "marah"; 
+            return View(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -86,7 +88,10 @@ namespace Electronic_Mall.Controllers
 
                 if (user != null && VerifyPasswordHash(model.Password, user.Passwordhash))
                 {
-                    // تحقق من صحة كلمة المرور هنا
+                    // Use cookies to maintain authenticated user status between requests.
+                    // This method creates encrypted authentication cookies that are managed by ASP.NET Core.
+                    // Cookies are the mechanism used here instead of HTTP sessions because sessions store data on the server and require
+                    // And manage user sessions across requests without having to re-authenticate with each request.
                     var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Name, user.Username),

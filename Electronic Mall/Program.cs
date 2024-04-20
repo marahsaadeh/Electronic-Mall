@@ -1,8 +1,10 @@
 ﻿using Electronic_Mall.Data;
 using Electronic_Mall.Models;
 using FluentAssertions.Common;
+//Identity System(HttpContext.SignInAsync) "cookies"
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Principal;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
