@@ -27,14 +27,66 @@ namespace Electronic_Mall.Controllers
             hostingEnvironment = hc;
         }
        
-        //localhost:7171/Product/ReadProducts
-        public IActionResult ReadProducts()
+
+
+        public IActionResult ReadProducts(string searchTerm, int? category, int? minQuantity, decimal? minPrice, decimal? maxPrice)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            var products = db.Categories.Include(p => p.Products).ToList();
-            return View(products);
+            var categoriesQuery = db.Categories.Include(c => c.Products).AsQueryable();
 
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                categoriesQuery = categoriesQuery.Where(c => c.Products.Any(p => p.Name.Contains(searchTerm)));
+            }
+
+            if (category.HasValue && category.Value > 0)
+            {
+                categoriesQuery = categoriesQuery.Where(c => c.Categoryid == category.Value);
+            }
+
+            
+            if (minQuantity.HasValue || minPrice.HasValue || maxPrice.HasValue)
+            {
+                categoriesQuery = categoriesQuery.Select(c => new Category
+                {
+                    Categoryid = c.Categoryid,
+                    Categoryname = c.Categoryname,
+                    Photo = c.Photo,
+                    Products = c.Products
+                        .Where(p => (!minQuantity.HasValue || p.Quantity >= minQuantity.Value) &&
+                                    (!minPrice.HasValue || p.Price >= minPrice.Value) &&
+                                    (!maxPrice.HasValue || p.Price <= maxPrice.Value))
+                        .ToList()
+                });
+            }
+
+            var model = categoriesQuery.ToList(); 
+            return View(model);
         }
+
+
+        /*
+       
+        public IActionResult ReadProducts(string searchTerm, int? category)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var categories = db.Categories.Include(c => c.Products).AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                categories = categories.Where(c => c.Products.Any(p => p.Name.Contains(searchTerm)));
+            }
+
+            if (category.HasValue && category.Value > 0)
+            {
+                categories = categories.Where(c => c.Categoryid == category.Value);
+            }
+
+            var model = categories.ToList(); // This will execute the query
+            return View(model);
+        }
+       */
+
 
         [HttpGet]
         //localhost:7171/Product/AddProduct

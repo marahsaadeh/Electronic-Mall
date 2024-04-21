@@ -21,43 +21,30 @@
     @foreach (var product in category.Products)
         {
            
-            <li>رقم الممممممممنتج الي دي @product.Productid</li>
+<h1>ReadProducts</h1>
+<form action="/Product/ReadProducts" method="get">
          
-    <li>@product.Name</li>
-    <li>الفئة ابوجكت :@product.Category</li>
-            <li>@product.Description</li>
-            <li>@product.Price</li>
-            <li>@product.Quantity </li>
-            @if (!string.IsNullOrEmpty(product.Photo))
+    <input type="text" name="searchTerm" placeholder="Search by name..." class="form-control" />
+    <select name="category" class="form-control">
+        <option value="">All Categories</option>
+        @foreach (var cat in Model)
             {
-                <li>
-                Photo: <img src="../assets/img/@product.Photo" alt="@product.Name" width="200" height="150" />
-                    </li>
-               
-
+            <option value="@cat.Categoryid">@cat.Categoryname</option>
             }
-            <li>الصورة في الداتا بيس مخزنة هيك :@product.Photo </li>
+    </select>
+    <input type="number" name="minQuantity" placeholder="Minimum Quantity" class="form-control" />
+    <input type="number" name="minPrice" placeholder="Minimum Price" step="0.01" class="form-control" />
+    <input type="number" name="maxPrice" placeholder="Maximum Price" step="0.01" class="form-control" />
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
 
           
-
-           
-    }
-  </ul>
-}
-<h1>Cؤؤؤؤؤؤؤategories</h1>
-
-<h1>ReadProducts</h1>
-
-<h1>ReadProducts</h1>
-
-<h1>ReadProducts</h1>
-
-<table class="table table-striped">
+<table class="table">
     <thead>
         <tr>
-            <th>الاسم</th>
-            <th>معلومات حول المنتج</th>
-            <th>العمليات</th>
+            <th>Name</th>
+            <th>Details</th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -67,33 +54,16 @@
             @foreach (var product in category.Products)
             {
                 <tr>
-                    <td class="product-name">@product.Name</td>
-                    <td class="product-details">
-                        <ul>
-            <li>الفئة: @category.Categoryname</li>
-            <li>رقم الفئة: @category.Categoryid</li>
-            <li>الوصف : @product.Description</li>
-            <li>السعر: @product.Price</li>
-            <li>الكمية: @product.Quantity</li>
-            @if (!string.IsNullOrEmpty(product.Photo))
-            {
-                <li>
-                    الصورة: <img src="../assets/img/@product.Photo" alt="@product.Name" width="200" height="150" />
-                </li>
-            }
-            <li>اسم الصورة في قاعدة البيانات: @product.Photo</li>
-                            </ul>
+                    <td>@product.Name</td>
+                    <td>
+                        <div>Category: @category.Categoryname</div>
+                        <div>Description: @product.Description</div>
+                        <div>Price: @product.Price</div>
+                        <div>Quantity: @product.Quantity</div>
+                    </td>
             <td>
-                        <a href="@Url.Action("EditProduct", "Product", new { productId = product.Productid })" class="text-primary">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M12.854.146a1 1 0 0 1 0 1.414L2.707 12.561a1 1 0 0 0-.226.364l-1.5 3a1 1 0 0 0 1.22 1.22l3-1.5a1 1 0 0 0 .364-.226L14.854 3.146a1 1 0 0 1 1.414 0l1.5 1.5a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1-1.49-1.326l1.5-3a1 1 0 0 0-.226-.364L12.854.146zM3.646 11.646l7-7 .708.708-7 7-.708-.708z" />
-                            </svg>
-                        </a>
-                        <a href="@Url.Action("Delete", "Product", new { id = product.Productid })" class="text-danger">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 1 1 1v1a1 1 0 0 0 1 1h1v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h1a1 1 0 0 1 1-1V2a1 1 0 0 1-1-1H3zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v1H1V4zm4-2v-.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5V2h1v-.5A1.5 1.5 0 0 0 10.5 0h-5A1.5 1.5 0 0 0 4 1.5V2h1z" />
-                            </svg>
-                        </a>
+                        <a href="@Url.Action("Edit", "Products", new { id = product.Productid })">Edit</a>
+                        <a href="@Url.Action("Delete", "Products", new { id = product.Productid })">Delete</a>
                     </td>
                 </tr>
             }
