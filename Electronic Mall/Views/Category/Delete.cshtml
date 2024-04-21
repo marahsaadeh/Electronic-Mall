@@ -1,0 +1,5 @@
+﻿@model Electronic_Mall.Models.Category
+<p>هل أنت متأكد من عملية الحذف ؟</p>
+<a href="@Url.Action("DeletedSuccess", "Category", new { id = @Model.Categoryid})" class="text-danger">حذف</a>
+<a href="@Url.Action("ReadCategories", "Category")">إلغاء</a>
+

@@ -1,0 +1,66 @@
+﻿@section Styles {
+    <style>
+        #aPro {
+            background-color: silver;
+        }
+        h1 {
+            text-align: center;
+        }
+    </style>
+}
+
+@model IEnumerable<Electronic_Mall.Models.Category>
+
+<h1>Cؤؤؤؤؤؤؤategories</h1>
+
+
+<h1>ReadProducts</h1>
+<form action="/Product/ReadProducts" method="get">
+     
+    <input type="text" name="searchTerm" placeholder="Search by name..." class="form-control" />
+    <select name="category" class="form-control">
+        <option value="">All Categories</option>
+        @foreach (var cat in Model)
+        {
+            <option value="@cat.Categoryid">@cat.Categoryname</option>
+        }
+    </select>
+    <input type="number" name="minQuantity" placeholder="Minimum Quantity" class="form-control" />
+    <input type="number" name="minPrice" placeholder="Minimum Price" step="0.01" class="form-control" />
+    <input type="number" name="maxPrice" placeholder="Maximum Price" step="0.01" class="form-control" />
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Details</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+
+            @foreach (var product in category.Products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>
+                        <div>Category: @category.Categoryname</div>
+                        <div>Description: @product.Description</div>
+                        <div>Price: @product.Price</div>
+                        <div>Quantity: @product.Quantity</div>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Products", new { id = product.Productid })">Edit</a>
+                        <a href="@Url.Action("Delete", "Products", new { id = product.Productid })">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

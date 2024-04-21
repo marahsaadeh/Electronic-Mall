@@ -1,0 +1,32 @@
+﻿@model Electronic_Mall.LoginViewModel
+
+@{
+    ViewData["Title"] = "تسجيل الدخول";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<form action="/Account/Login" method="post">
+    <div class="text-danger">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="Username">اسم المستخدم</label>
+        <input type="text" id="Username" name="Username" class="form-control" value="@Model.Username" />
+        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label for="Password">كلمة المرور</label>
+        <input type="password" id="Password" name="Password" class="form-control" />
+        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
+    </div>
+</form>
+
+      
+
