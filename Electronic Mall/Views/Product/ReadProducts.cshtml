@@ -13,17 +13,24 @@
 
 <h1>Cؤؤؤؤؤؤؤategories</h1>
 
-
+@foreach (var category in Model)
+{
+  <h2>@category.Categoryname</h2>
+    <li>categggggggggggggory IIIIID @category.Categoryid</li>
+  <ul>
+    @foreach (var product in category.Products)
+        {
+           
 <h1>ReadProducts</h1>
 <form action="/Product/ReadProducts" method="get">
-     
+         
     <input type="text" name="searchTerm" placeholder="Search by name..." class="form-control" />
     <select name="category" class="form-control">
         <option value="">All Categories</option>
         @foreach (var cat in Model)
-        {
+            {
             <option value="@cat.Categoryid">@cat.Categoryname</option>
-        }
+            }
     </select>
     <input type="number" name="minQuantity" placeholder="Minimum Quantity" class="form-control" />
     <input type="number" name="minPrice" placeholder="Minimum Price" step="0.01" class="form-control" />
@@ -31,7 +38,7 @@
     <button type="submit" class="btn btn-primary">Search</button>
 </form>
 
-
+          
 <table class="table">
     <thead>
         <tr>
@@ -43,7 +50,7 @@
     <tbody>
         @foreach (var category in Model)
         {
-
+            
             @foreach (var product in category.Products)
             {
                 <tr>
@@ -54,7 +61,7 @@
                         <div>Price: @product.Price</div>
                         <div>Quantity: @product.Quantity</div>
                     </td>
-                    <td>
+            <td>
                         <a href="@Url.Action("Edit", "Products", new { id = product.Productid })">Edit</a>
                         <a href="@Url.Action("Delete", "Products", new { id = product.Productid })">Delete</a>
                     </td>
@@ -64,3 +71,9 @@
     </tbody>
 </table>
 
+
+        
+  </div>
+</div>
+
+</section>

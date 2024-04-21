@@ -26,7 +26,7 @@ namespace Electronic_Mall.Controllers
             this.db = db; 
             hostingEnvironment = hc;
         }
-
+       
 
 
         public IActionResult ReadProducts(string searchTerm, int? category, int? minQuantity, decimal? minPrice, decimal? maxPrice)

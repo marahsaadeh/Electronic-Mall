@@ -17,9 +17,13 @@ public partial class Product
 
     public int Quantity { get; set; }
 
+    // public IFormFile? Photo { get; set; }
     public string? Photo { get; set; }
-
+   
     public virtual ICollection<Cart> Carts { get; set; } = new List<Cart>();
 
     public virtual Category Category { get; set; } = null!;
 }
+
+
+
