@@ -17,6 +17,7 @@ https://www.figma.com/file/rvjjfvkYiij6esRhLymU8v/Inventory-management-system?ty
 
 ### Task Management
 **Jira** was used to manage and track all project-related tasks. Work was divided into Epics, tasks, and subtasks for organized and efficient progress tracking.
+https://marah4saadeh.atlassian.net/jira/software/c/projects/IMP/boards/2/timeline
 
 ## Technologies Used
 
