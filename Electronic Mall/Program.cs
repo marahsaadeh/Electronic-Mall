@@ -4,6 +4,7 @@ using FluentAssertions.Common;
 //Identity System(HttpContext.SignInAsync) "cookies"
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 using System.Security.Principal;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,7 +49,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication(); 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -58,3 +59,5 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 app.Run();
+
+

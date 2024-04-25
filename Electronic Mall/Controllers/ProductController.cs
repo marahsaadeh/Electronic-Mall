@@ -63,6 +63,8 @@ namespace Electronic_Mall.Controllers
             var model = categoriesQuery.ToList();
             return View(model);
         }
+       */
+
 
         [HttpGet]
         //localhost:7171/Product/AddProduct

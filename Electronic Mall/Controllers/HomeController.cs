@@ -50,6 +50,8 @@ namespace Electronic_Mall.Controllers
             return View(products);
         }
 
+
+
         //localhost:7171/Home/Product?productId=3
         public ActionResult Product(int? productId)
         {

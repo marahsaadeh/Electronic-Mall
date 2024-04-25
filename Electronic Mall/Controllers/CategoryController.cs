@@ -74,11 +74,11 @@ namespace Electronic_Mall.Controllers
                 db.Entry(category).State = EntityState.Modified;
 
                 db.SaveChanges();
-   return RedirectToAction("ReadCategories");
+                return RedirectToAction("ReadCategories");
             }
             else
             {
-            
+
                 return View(category);
             }
         }
@@ -89,7 +89,7 @@ namespace Electronic_Mall.Controllers
                 return NotFound();
             }
 
-            var category =db.Categories.Find(id);
+            var category = db.Categories.Find(id);
             if (category == null)
             {
                 return NotFound();
@@ -100,13 +100,13 @@ namespace Electronic_Mall.Controllers
 
         public ActionResult DeletedSuccess(int id)
         {
-            var category =db.Categories.Find(id);
+            var category = db.Categories.Find(id);
             if (category != null)
             {
-               db.Categories.Remove(category);
+                db.Categories.Remove(category);
                 try
                 {
-                   db.SaveChanges();
+                    db.SaveChanges();
                     return View();
                 }
                 catch (DbUpdateException ex)
@@ -120,8 +120,8 @@ namespace Electronic_Mall.Controllers
             return NotFound(); // Category not found
         }
 
-      
-       
+
+
 
 
 
@@ -132,6 +132,3 @@ namespace Electronic_Mall.Controllers
 
 
 
-
-
-  
