@@ -1,28 +1,40 @@
 ﻿@section Styles {
     <style>
-        #aCate {
-            background-color: silver;
+        .category-img {
+            width: 100px; 
+            height: auto; 
+            border-radius: 5px; 
         }
-        h1 {
-            text-align: center;
+
+        .table th, .table td {
+            vertical-align: middle; 
+            text-align: center; 
+        }
+
+        .table .btn {
+            margin: 5px; 
+        }
+
+        .table {
+            margin-top: 20px; 
+        }
+
+        .form-group {
+            margin-bottom: 15px; 
         }
     </style>
 }
 
 @model List<Electronic_Mall.Models.Category>
-<h1>Categor creaaat</h1>
-<h2>Create Category</h2>
+
+<h1 class="text-center">إدارة الفئات</h1>
+
 <section id="services" class="services section-bg">
-<div style="margin-right: 20%">
     <div class="container">
-        <form action="/Category/AddCategory" method="post">
-            <label for="categoryName">Category Name:</label><br>
-            <input type="text" id="categoryName" name="categoryName"><br><br>
-      <button type="submit">اضافة الصنف الجديد</button>
-        </form>
-        <table class="table table-striped">
+        <table class="table table-hover">
             <thead>
                 <tr>
+                    <th>الصورة</th>
                     <th>الاسم</th>
                     <th>العمليات</th>
                 </tr>
@@ -30,30 +42,46 @@
             <tbody>
                 @foreach (var category in Model)
                 {
-                    
                     <tr>
+                        <td>
+                            <div>
+                                @if (!string.IsNullOrEmpty(category.Photo))
+                                {
+                                    <li>
+                                        الصورة: <img src="../assets/img/@category.Photo" alt="@category.Categoryname" class="category-img" />
+                                    </li>
+                                }
+
+                            </div>
+                           
+                        </td>
                         <td>@category.Categoryname</td>
                         <td>
-               <!--buttoe Edite-->
-           <a href="@Url.Action("EditCategory", "Category", new { categoryId = category.Categoryid })" class="text-primary">
-      
-                         <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                            
-                                    <path fill-rule="evenodd" d="M12.854.146a1 1 0 0 1 0 1.414L2.707 12.561a1 1 0 0 0-.226.364l-1.5 3a1 1 0 0 0 1.22 1.22l3-1.5a1 1 0 0 0 .364-.226L14.854 3.146a1 1 0 0 1 1.414 0l1.5 1.5a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1-1.49-1.326l1.5-3a1 1 0 0 0-.226-.364L12.854.146zM3.646 11.646l7-7 .708.708-7 7-.708-.708z" />
-                                </svg>
+                            <a href="@Url.Action("EditCategory", "Category", new { categoryId = category.Categoryid })" class="btn btn-outline-primary btn-sm">
+                                تعديل
                             </a>
-             <a href="@Url.Action("Delete", "Category", new { id = category.Categoryid })" class="text-danger">
-                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 1 1 1v1a1 1 0 0 0 1 1h1v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h1a1 1 0 0 1 1-1V2a1 1 0 0 1-1-1H3zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v1H1V4zm4-2v-.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5V2h1v-.5A1.5 1.5 0 0 0 10.5 0h-5A1.5 1.5 0 0 0 4 1.5V2h1z" />
-                                </svg>
+                            <a href="@Url.Action("Delete", "Category", new { id = category.Categoryid })" class="btn btn-outline-danger btn-sm">
+                                حذف
                             </a>
                         </td>
                     </tr>
                 }
             </tbody>
         </table>
-    </div>
-</div>
 
+        <form action="/Category/AddCategory" method="post" enctype="multipart/form-data" class="mb-4">
+            <div class="form-group">
+                <h2>إضافة فئة جديدة</h2>
+                <label for="categoryName">اسم الفئة:</label>
+                <input type="text" id="categoryName" name="CategoryName" class="form-control" required>
+                <div class="form-group">
+                    <label for="Photo">صورة الفئة:</label>
+                    <input type="file" id="Photo" name="Photo" class="form-control" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">إضافة</button>
+        </form>
+
+    </div>
 </section>
- 
+

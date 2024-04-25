@@ -1,98 +1,155 @@
 ﻿@section Styles {
     <style>
-        #aPro {
-            background-color: silver;
+        .search-section {
+            background-color: #eee;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
-        h1 {
+
+            .search-section form {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .search-section input, .search-section select, .search-section button {
+                flex: 1;
+                min-width: 120px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            .search-section button {
+                color: white;
+                background-color: #6A37E6;
+                cursor: pointer;
+            }
+
+                .search-section button:hover {
+                    background-color: #5930e5;
+                }
+
+        .table th {
+            background-color: #6A37E6;
+            color: white;
+        }
+
+        .btn-add-new {
+            display: block;
+            width: 100%;
+            padding: 10px;
             text-align: center;
+            background-color: #5cb85c;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 20px;
         }
+
+            .btn-add-new:hover {
+                background-color: #4cae4c;
+            }
+
+        .btn-add-icon {
+            display: inline-block; 
+            padding: 10px; 
+            border-radius: 50%; 
+            background-color: #6A37E6; 
+            color: white; 
+            font-size: 16px; 
+            text-align: center; 
+            line-height: 1;
+            vertical-align: middle; 
+        }
+
+            .btn-add-icon:hover {
+                background-color: #5832d8;
+            }
+
+          
+            .btn-add-icon:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px #5832d8;
+            }
+
+        .product-img {
+            width: 150px; 
+            height: auto;
+            border-radius: 5px; 
+        }
+
+
     </style>
 }
 
 @model IEnumerable<Electronic_Mall.Models.Category>
 
-<h1>Cؤؤؤؤؤؤؤategories</h1>
+<h1 class="text-center">المنتجات</h1>
 
-@foreach (var category in Model)
-{
-  <h2>@category.Categoryname</h2>
-    <li>categggggggggggggory IIIIID @category.Categoryid</li>
-  <ul>
-    @foreach (var product in category.Products)
-        {
-           
-            <li>رقم الممممممممنتج الي دي @product.Productid</li>
-         
-    <li>@product.Name</li>
-    <li>الفئة ابوجكت :@product.Category</li>
-            <li>@product.Description</li>
-            <li>@product.Price</li>
-            <li>@product.Quantity </li>
-            @if (!string.IsNullOrEmpty(product.Photo))
+<div class="search-section">
+    <a href="/Product/AddProduct" class="btn-add-icon" aria-label="إضافة منتج جديد">
+        <i class="fas fa-plus"></i>
+    </a>
+    <form action="/Product/ReadProducts" method="get">
+        <input type="text" name="searchTerm" placeholder="Search by name..." />
+        <select name="category">
+            <option value="">الفئات</option>
+            @foreach (var cat in Model)
             {
-                <li>
-                Photo: <img src="../assets/img/@product.Photo" alt="@product.Name" width="200" height="150" />
-                    </li>
-               
-
+                <option value="@cat.Categoryid">@cat.Categoryname</option>
             }
-            <li>الصورة في الداتا بيس مخزنة هيك :@product.Photo </li>
+        </select>
+        <input type="number" name="minQuantity" placeholder="Minimum Quantity" />
+        <input type="number" name="minPrice" placeholder="Minimum Price" />
+        <input type="number" name="maxPrice" placeholder="Maximum Price" />
+        <button type="submit">Search</button>
+    </form>
+   
 
-          
+</div>
 
-           
-    }
-  </ul>
-}
-<h1>Cؤؤؤؤؤؤؤategories</h1>
 
-<h1>ReadProducts</h1>
 
-<h1>ReadProducts</h1>
-
-<h1>ReadProducts</h1>
-
-<table class="table table-striped">
+<table class="table table-hover">
     <thead>
         <tr>
+            <th>الصورة</th>
             <th>الاسم</th>
-            <th>معلومات حول المنتج</th>
+            <th>التفاصيل</th>
             <th>العمليات</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var category in Model)
         {
-            
             @foreach (var product in category.Products)
             {
                 <tr>
-                    <td class="product-name">@product.Name</td>
-                    <td class="product-details">
-                        <ul>
-            <li>الفئة: @category.Categoryname</li>
-            <li>رقم الفئة: @category.Categoryid</li>
-            <li>الوصف : @product.Description</li>
-            <li>السعر: @product.Price</li>
-            <li>الكمية: @product.Quantity</li>
-            @if (!string.IsNullOrEmpty(product.Photo))
-            {
-                <li>
-                    الصورة: <img src="../assets/img/@product.Photo" alt="@product.Name" width="200" height="150" />
-                </li>
-            }
-            <li>اسم الصورة في قاعدة البيانات: @product.Photo</li>
-                            </ul>
-            <td>
-                        <a href="@Url.Action("EditProduct", "Product", new { productId = product.Productid })" class="text-primary">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M12.854.146a1 1 0 0 1 0 1.414L2.707 12.561a1 1 0 0 0-.226.364l-1.5 3a1 1 0 0 0 1.22 1.22l3-1.5a1 1 0 0 0 .364-.226L14.854 3.146a1 1 0 0 1 1.414 0l1.5 1.5a1 1 0 0 1 0 1.414l-10 10a1 1 0 0 1-1.49-1.326l1.5-3a1 1 0 0 0-.226-.364L12.854.146zM3.646 11.646l7-7 .708.708-7 7-.708-.708z" />
-                            </svg>
+                    <td>
+                        @if (!string.IsNullOrEmpty(product.Photo))
+                        {
+                            <li>
+                            <img src="../assets/img/@product.Photo" alt="@product.Name" class="product-img" />
+                        </li>
+                        }
+
+                    </td>
+                    <td>@product.Name</td>
+                    <td>
+                        <div>الفئة: @category.Categoryname</div>
+                        <div>الوصف: @product.Description</div>
+                        <div>السعر: @product.Price</div>
+                        <div>الكمية: @product.Quantity</div>
+                    </td>
+                  
+                    <td>
+                        <a href="@Url.Action("EditProduct", "Product", new { productId = product.Productid })" class="btn btn-sm btn-outline-primary btn-edit">
+                            تعديل
                         </a>
-                        <a href="@Url.Action("Delete", "Product", new { id = product.Productid })" class="text-danger">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 1 1 1v1a1 1 0 0 0 1 1h1v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h1a1 1 0 0 1 1-1V2a1 1 0 0 1-1-1H3zM1 4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v1H1V4zm4-2v-.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5V2h1v-.5A1.5 1.5 0 0 0 10.5 0h-5A1.5 1.5 0 0 0 4 1.5V2h1z" />
-                            </svg>
+                        <a href="@Url.Action("Delete", "Product", new { id = product.Productid })" class="btn btn-sm btn-outline-danger btn-delete">
+                            حذف
                         </a>
                     </td>
                 </tr>
@@ -102,8 +159,9 @@
 </table>
 
 
-        
-  </div>
-</div>
 
-</section>
+
+
+
+
+

@@ -10,8 +10,18 @@ namespace Electronic_Mall.Controllers
     {
         //localhost:7171/controller/Action in controller
         //localhost:7171/home/index
+
         public IActionResult Index()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+           
+            var categories = db.Categories.Include(c => c.Products).ToList();
+            ViewBag.Categories = categories;
+
+            
+             var products = db.Products.ToList();
+             ViewBag.Products = products;
+
             return View();
         }
         //localhost:7171/home/privacy

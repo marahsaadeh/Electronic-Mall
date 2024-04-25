@@ -16,7 +16,13 @@
                     <a href="@Url.Action("SubCategory","Home", new { subCategoryId = category.Categoryid })" style="text-decoration: none;">
                         <div class="card" style="width: 18rem; height: 20rem;">
                             <!-- Execute the SubCategory view located in the Home folder, including the category identifier (categoryId) as a variable in the URL. -->
-                            <img src="@category.Photo" class="card-img-top" alt="@category.Categoryname" style="width: 100%; height: 83%;" />
+                            
+                            @if (!string.IsNullOrEmpty(category.Photo))
+                            {
+                                
+                                    <img src="../assets/img/@category.Photo" class="card-img-top" alt="@category.Categoryname" style="width: 100%; height: 83%;" />
+                               
+                            }
                             <div class="card-body">
                                 <h5 class="card-title" style="text-align: center;">@category.Categoryname</h5>
                             </div>
@@ -31,4 +37,6 @@
 
     </div>
 
-</section><!-- End Services Section -->
+</section>
+
+

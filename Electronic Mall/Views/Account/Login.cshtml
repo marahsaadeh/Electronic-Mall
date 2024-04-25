@@ -4,29 +4,53 @@
     ViewData["Title"] = "تسجيل الدخول";
 }
 
-<h2>@ViewData["Title"]</h2>
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 
-<form action="/Account/Login" method="post">
-    <div class="text-danger">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title text-center">تسجيل الدخول</h3>
+                    <p class="text-center">تسجيل الدخول إلى حسابك</p>
+
+                    <form action="/Account/Login" method="post">
+                        <div class="form-group">
+                            <label for="Username">اسم المستخدم</label>
+                            <input type="text" id="Username" name="Username" class="form-control" value="@Model.Username" />
+                            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Password">كلمة المرور</label>
+                            <input type="password" id="Password" name="Password" class="form-control" />
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn" style="background-color: #6A37E6; color: white;">تسجيل الدخول</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
     </div>
+</div>
 
-    <div class="form-group">
-        <label for="Username">اسم المستخدم</label>
-        <input type="text" id="Username" name="Username" class="form-control" value="@Model.Username" />
-        @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
-    </div>
+<br />
 
-    <div class="form-group">
-        <label for="Password">كلمة المرور</label>
-        <input type="password" id="Password" name="Password" class="form-control" />
-        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-    </div>
+<br />
+<style>
+    .card {
+        border: 1px solid #6A37E6;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 15px;
+    }
 
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">تسجيل الدخول</button>
-    </div>
-</form>
-
-      
-
+    .btn {
+        width: 100%;
+        padding: 8px;
+        border-radius: 25px;
+    }
+</style>
