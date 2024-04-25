@@ -1,69 +1,156 @@
 ﻿@section Styles {
     <style>
-        #aPro {
-            background-color: silver;
+        .search-section {
+            background-color: #eee;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
-        h1 {
+
+            .search-section form {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .search-section input, .search-section select, .search-section button {
+                flex: 1;
+                min-width: 120px;
+                padding: 10px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+            }
+
+            .search-section button {
+                color: white;
+                background-color: #6A37E6;
+                cursor: pointer;
+            }
+
+                .search-section button:hover {
+                    background-color: #5930e5;
+                }
+
+        .table th {
+            background-color: #6A37E6;
+            color: white;
+        }
+
+        .btn-add-new {
+            display: block;
+            width: 100%;
+            padding: 10px;
             text-align: center;
+            background-color: #5cb85c;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-bottom: 20px;
         }
+
+            .btn-add-new:hover {
+                background-color: #4cae4c;
+            }
+
+        .btn-add-icon {
+            display: inline-block; 
+            padding: 10px; 
+            border-radius: 50%; 
+            background-color: #6A37E6; 
+            color: white; 
+            font-size: 16px; 
+            text-align: center; 
+            line-height: 1;
+            vertical-align: middle; 
+        }
+
+            .btn-add-icon:hover {
+                background-color: #5832d8;
+            }
+
+          
+            .btn-add-icon:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px #5832d8;
+            }
+
+        .product-img {
+            width: 150px; 
+            height: auto;
+            border-radius: 5px; 
+        }
+
+
     </style>
 }
 
 @model IEnumerable<Electronic_Mall.Models.Category>
 
-<h1>Cؤؤؤؤؤؤؤategories</h1>
+<h1 class="text-center">المنتجات</h1>
 
-@foreach (var category in Model)
-{
-  <h2>@category.Categoryname</h2>
-    <li>categggggggggggggory IIIIID @category.Categoryid</li>
-  <ul>
-    @foreach (var product in category.Products)
-        {
-           
-<h1>ReadProducts</h1>
-<form action="/Product/ReadProducts" method="get">
-         
-    <input type="text" name="searchTerm" placeholder="Search by name..." class="form-control" />
-    <select name="category" class="form-control">
-        <option value="">All Categories</option>
-        @foreach (var cat in Model)
+<div class="search-section">
+    <a href="/Product/AddProduct" class="btn-add-icon" aria-label="إضافة منتج جديد">
+        <i class="fas fa-plus"></i>
+    </a>
+    <form action="/Product/ReadProducts" method="get">
+        <input type="text" name="searchTerm" placeholder="Search by name..." />
+        <select name="category">
+            <option value="">الفئات</option>
+            @foreach (var cat in Model)
             {
-            <option value="@cat.Categoryid">@cat.Categoryname</option>
+                <option value="@cat.Categoryid">@cat.Categoryname</option>
             }
-    </select>
-    <input type="number" name="minQuantity" placeholder="Minimum Quantity" class="form-control" />
-    <input type="number" name="minPrice" placeholder="Minimum Price" step="0.01" class="form-control" />
-    <input type="number" name="maxPrice" placeholder="Maximum Price" step="0.01" class="form-control" />
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
+        </select>
+        <input type="number" name="minQuantity" placeholder="Minimum Quantity" />
+        <input type="number" name="minPrice" placeholder="Minimum Price" />
+        <input type="number" name="maxPrice" placeholder="Maximum Price" />
+        <button type="submit">Search</button>
+    </form>
+   
 
-          
-<table class="table">
+</div>
+
+
+
+<table class="table table-hover">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Details</th>
-            <th>Actions</th>
+            <th>الصورة</th>
+            <th>الاسم</th>
+            <th>التفاصيل</th>
+            <th>العمليات</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var category in Model)
         {
-            
             @foreach (var product in category.Products)
             {
                 <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(product.Photo))
+                        {
+                            <li>
+                            <img src="../assets/img/@product.Photo" alt="@product.Name" class="product-img" />
+                        </li>
+                        }
+
+                    </td>
                     <td>@product.Name</td>
                     <td>
-                        <div>Category: @category.Categoryname</div>
-                        <div>Description: @product.Description</div>
-                        <div>Price: @product.Price</div>
-                        <div>Quantity: @product.Quantity</div>
+                        <div>الفئة: @category.Categoryname</div>
+                        <div>الوصف: @product.Description</div>
+                        <div>السعر: @product.Price</div>
+                        <div>الكمية: @product.Quantity</div>
                     </td>
-            <td>
-                        <a href="@Url.Action("Edit", "Products", new { id = product.Productid })">Edit</a>
-                        <a href="@Url.Action("Delete", "Products", new { id = product.Productid })">Delete</a>
+                  
+                    <td>
+                        <a href="@Url.Action("EditProduct", "Product", new { productId = product.Productid })" class="btn btn-sm btn-outline-primary btn-edit">
+                            تعديل
+                        </a>
+                        <a href="@Url.Action("Delete", "Product", new { id = product.Productid })" class="btn btn-sm btn-outline-danger btn-delete">
+                            حذف
+                        </a>
                     </td>
                 </tr>
             }
@@ -72,8 +159,9 @@
 </table>
 
 
-        
-  </div>
-</div>
 
-</section>
+
+
+
+
+

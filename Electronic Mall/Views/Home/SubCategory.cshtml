@@ -9,7 +9,13 @@
     the Home file, where the ID of the current product is passed along. -->
     <a href="@Url.Action("Product", "Home", new { productId = product.Productid })" class="btn btn-primary">عرض المنتج</a>
                 <div class="card" style="width: 18rem; direction: rtl;">
-                    <img src="@product.Photo" class="card-img-top" alt="@product.Name" style="width: 100%; height: 25rem;">
+                        @if (!string.IsNullOrEmpty(product.Photo))
+                        {
+                            
+                              <img src="../assets/img/@product.Photo" alt="@product.Name"  />
+                            
+
+                        }
                     <div class="card-body" style="text-align: right;">
                         <h5 class="card-title">@product.Name</h5>
                         <p class="card-text">@product.Description</p>

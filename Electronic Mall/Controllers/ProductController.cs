@@ -17,16 +17,16 @@ namespace Electronic_Mall.Controllers
     {
 
         //localhost:7171/controller/Action in controller
-    
+
         private readonly ApplicationDbContext db;
         private readonly IWebHostEnvironment hostingEnvironment;
 
         public ProductController(ApplicationDbContext db, IWebHostEnvironment hc)
         {
-            this.db = db; 
+            this.db = db;
             hostingEnvironment = hc;
         }
-       
+
 
 
         public IActionResult ReadProducts(string searchTerm, int? category, int? minQuantity, decimal? minPrice, decimal? maxPrice)
@@ -44,7 +44,7 @@ namespace Electronic_Mall.Controllers
                 categoriesQuery = categoriesQuery.Where(c => c.Categoryid == category.Value);
             }
 
-            
+
             if (minQuantity.HasValue || minPrice.HasValue || maxPrice.HasValue)
             {
                 categoriesQuery = categoriesQuery.Select(c => new Category
@@ -60,29 +60,7 @@ namespace Electronic_Mall.Controllers
                 });
             }
 
-            var model = categoriesQuery.ToList(); 
-            return View(model);
-        }
-
-
-        /*
-       
-        public IActionResult ReadProducts(string searchTerm, int? category)
-        {
-            ApplicationDbContext db = new ApplicationDbContext();
-            var categories = db.Categories.Include(c => c.Products).AsQueryable();
-
-            if (!string.IsNullOrEmpty(searchTerm))
-            {
-                categories = categories.Where(c => c.Products.Any(p => p.Name.Contains(searchTerm)));
-            }
-
-            if (category.HasValue && category.Value > 0)
-            {
-                categories = categories.Where(c => c.Categoryid == category.Value);
-            }
-
-            var model = categories.ToList(); // This will execute the query
+            var model = categoriesQuery.ToList();
             return View(model);
         }
        */
@@ -96,7 +74,7 @@ namespace Electronic_Mall.Controllers
             var categories = db.Categories.ToList();
             return View(categories);
 
-            // return View(new ProductViewModel { Categories = categories }); 
+            
 
         }
         [HttpPost]
@@ -109,35 +87,35 @@ namespace Electronic_Mall.Controllers
             // {
             string fileName = "";
 
-                if (product.Photo != null)
-                {
+            if (product.Photo != null)
+            {
                 //string uploadFolder = Server.MapPath("~/images");
                 string uploadFolder = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img");
-                    fileName = Guid.NewGuid().ToString() + "-" + product.Photo.FileName;
-                    string filePath = Path.Combine(uploadFolder, fileName);
+                fileName = Guid.NewGuid().ToString() + "-" + product.Photo.FileName;
+                string filePath = Path.Combine(uploadFolder, fileName);
 
-                    using (var fileStream = new FileStream(filePath, FileMode.Create))
-                    {
-                        product.Photo.CopyToAsync(fileStream); // Use async for file operations
-                    }
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    product.Photo.CopyToAsync(fileStream); // Use async for file operations
                 }
+            }
             // Add product to database
             Product newProduct = new Product
-                {
-                    Categoryid = product.Categoryid,
-                    Name = product.ProductName,
-                    Description = product.ProductDescription,
-                    Price = product.ProductPrice,
-                    Quantity = product.ProductQuantity,
-                    Photo = fileName
-                };            
+            {
+                Categoryid = product.Categoryid,
+                Name = product.ProductName,
+                Description = product.ProductDescription,
+                Price = product.ProductPrice,
+                Quantity = product.ProductQuantity,
+                Photo = fileName
+            };
             db.Products.AddAsync(newProduct);
             //await db.SaveChangesAsync();
             db.SaveChangesAsync();
 
-                ViewBag.Success = "Record added successfully!";
-                return RedirectToAction("ReadProducts"); // Redirect to a success page or product list
-           // }
+            ViewBag.Success = "Record added successfully!";
+            return RedirectToAction("ReadProducts"); // Redirect to a success page or product list
+                                                     // }
         }
 
         //localhost:7171/Product/EditProduct
@@ -152,18 +130,18 @@ namespace Electronic_Mall.Controllers
                 Categoryid = product.Categoryid,
                 ProductName = product.Name,
                 ProductDescription = product.Description,
-                ProductPrice= product.Price,
-                ProductQuantity=product.Quantity,
+                ProductPrice = product.Price,
+                ProductQuantity = product.Quantity,
             };
             ViewData["Productid"] = product.Productid;
             ViewData["Photo"] = product.Photo;
 
             return View(productViewModel);
-         //   return View(db.Products.Find(productId));
+            //   return View(db.Products.Find(productId));
         }
-        
+
         [HttpPost]
-        
+
         public ActionResult EditProduct(int id, ProductViewModel productVM)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -179,14 +157,14 @@ namespace Electronic_Mall.Controllers
                 string newFileName = product.Photo;
                 if (productVM.Photo != null)
                 {
-                        string uploadFolder = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img");
+                    string uploadFolder = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img");
                     newFileName = Guid.NewGuid().ToString() + "-" + productVM.Photo.FileName;
-                        string imageFullPath = Path.Combine(uploadFolder, newFileName);
-                   using (var stream = new FileStream(imageFullPath, FileMode.Create))
+                    string imageFullPath = Path.Combine(uploadFolder, newFileName);
+                    using (var stream = new FileStream(imageFullPath, FileMode.Create))
                     {
                         productVM.Photo.CopyTo(stream);
                     }
-          
+
                     // delete old photo
                     string oldImageFullPath = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img", product.Photo);
                     if (System.IO.File.Exists(oldImageFullPath))
@@ -218,9 +196,9 @@ namespace Electronic_Mall.Controllers
 
             string imageFullPath = Path.Combine(hostingEnvironment.WebRootPath, "assets", "img", product.Photo);
 
-          
-                System.IO.File.Delete(imageFullPath);
-            
+
+            System.IO.File.Delete(imageFullPath);
+
 
             db.Products.Remove(product);
             db.SaveChanges();
